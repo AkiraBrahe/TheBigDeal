@@ -1,0 +1,63 @@
+{
+  "Name": "The_Big_Deal_Campaign_Add-on",
+  "Enabled": true,
+
+  "Version": "1.7.3",
+
+  "Description": "A series of Flashpoints linked by a single plot. Your crew has the unique chance to get a lot of money and get hold of precious hardware, but who knows how it will all end?...",
+  "Author": "Hounfor",
+
+  "DependsOn": [ "BT_Extended", "BT_Extended_CE", "BT_Extended_3050", "Timeline" ],
+
+  "DLL": "TBD.dll",
+
+  "Settings": {
+    "AdditionalPlayerMechs": false,
+    "ExternalHeatPerActivationCap": 1500,
+    "ScaleObjectiveBuildingStructure": false
+  },
+
+  "DataAddendumEntries": [
+    { "name":"BattleTech.FactionEnumeration", "path":"enums/Faction.json" },
+    { "name":"BattleTech.AmmoCategoryEnumeration", "path":"enums/AmmoCategory.json" }
+  ],
+  "Manifest": [
+    { "Type": "AmmunitionDef", "Path": "ammunition" },
+    { "Type": "AmmunitionBoxDef", "Path": "ammunitionBox" },
+    { "Type": "BaseDescriptionDef", "Path": "descriptions" },
+    { "Type": "CastDef", "Path": "cast" },
+    { "Type": "ChassisDef", "Path": "chassis" },
+    { "Type": "ChassisDef", "Path": "chassisMerge", "ShouldMergeJSON": true },
+    { "Type": "ContractOverride", "Path": "contracts", "AddToDB": true },
+    { "Type": "ConversationContent", "Path": "dialogue_buckets" },
+  	{ "Type": "CustomTag", "Path": "tags" },
+	  { "Type": "CustomTagSet", "Path": "tagSets" },
+    { "Type": "DialogBucketDef", "Path": "conversationBuckets" },
+    { "Type": "FactionDef", "Path": "factions" },
+    { "Type": "FlashpointDef", "Path": "flashpoints" },
+    { "Type": "HardpointDataDef", "Path": "hardpoints" },
+    { "Type": "HeraldryDef", "Path": "heraldry" },
+    { "Type": "ItemCollectionDef", "Path": "itemCollections" },
+    { "Type": "ItemCollectionDef", "Path": "itemCollectionsAppend", "ShouldAppendText": true },
+    { "Type": "LanceDef", "Path": "lance", "AddToDB": true },
+    { "Type": "MechDef", "Path": "mech", "AddToDB": true },
+    { "Type": "PilotDef", "Path": "pilot", "AddToDB": true },
+    { "Type": "ShipModuleUpgrade", "Path": "shipUpgrades" },
+    { "Type": "SimGameEventDef", "Path": "events", "AddToDB": true },
+    { "Type": "SimGameEventDef", "Path": "eventsOverride", "AddToDB": true },
+    { "Type": "SimGameMilestoneSet", "Path": "milestoneSets" },
+    { "Type": "SimGameConversations", "Path": "simGameConversations" },
+    { "Type": "Sprite", "Path": "sprites" },
+    { "Type": "Sprite", "Path": "portraits" },
+    { "Type": "Sprite", "Path": "emblems", "AddToAddendum": "PlayerEmblems" },
+    { "Type": "Texture2D", "Path": "emblems", "AddToAddendum": "PlayerEmblems" },
+    { "Type": "Texture2D", "Path": "sprites" },
+    { "Type": "Texture2D", "Path": "textures", "AddToAddendum": "ConversationTexture"},
+    { "Type": "TurretDef", "Path": "turret", "AddToDB": true },
+    { "Type": "TurretChassisDef", "Path": "turretChassis" },
+    { "Type": "UpgradeDef", "Path": "upgrades", "AddToDB": true },
+    { "Type": "VehicleChassisDef", "Path": "vehicleChassis" },
+    { "Type": "VehicleDef", "Path": "vehicle", "AddToDB": true },
+    { "Type": "WeaponDef", "Path": "weapon", "AddToDB": true }
+  ]
+}
