@@ -49,13 +49,11 @@ namespace TBD
 
         internal static void ApplySettings()
         {
-            // Load TBD contract IDs
             if (Settings.AdditionalPlayerMechs)
                 LoadTBDContractIds();
 
-            // Add TBD unit table references 
             if (FullXotlTables.Core.Settings?.UnitTableReferences != null)
-                AddTBDTableReferences();
+                AddTBDUnitTableReferences();
 
             // Disable heat cap per mech activation
             if (Settings.ExternalHeatPerActivationCap != 45)
@@ -64,7 +62,6 @@ namespace TBD
             // Disable building structure scaling
             if (!Settings.ScaleObjectiveBuildingStructure)
                 IRTweaks.Mod.Config.Fixes.ScaleObjectiveBuildingStructure = false;
-
         }
 
         internal static void LoadTBDContractIds()
@@ -82,7 +79,7 @@ namespace TBD
             Log.LogDebug($"Loaded {TBDContractIds.Count} contract IDs from contracts subfolder.");
         }
 
-        internal static void AddTBDTableReferences()
+        internal static void AddTBDUnitTableReferences()
         {
             try
             {

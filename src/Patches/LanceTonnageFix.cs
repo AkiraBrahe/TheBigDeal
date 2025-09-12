@@ -20,11 +20,10 @@ namespace TBD.Patches
                 if (__instance == null || __instance.slotMaxTonnages == null)
                     return;
 
-                int vanillaSlots = Math.Min(4, __instance.slotMinTonnages.Length);
                 float lastValidMinTonnage = -1f;
-                for (int i = vanillaSlots - 1; i >= 0; i--)
+                for (int i = __instance.slotMinTonnages.Length - 1; i >= 0; i--)
                 {
-                    if (__instance.slotMinTonnages[i] >= 0f)
+                    if (i < __instance.maxUnits && __instance.slotMinTonnages[i] >= 0f)
                     {
                         lastValidMinTonnage = __instance.slotMinTonnages[i];
                         break;
@@ -32,16 +31,16 @@ namespace TBD.Patches
                 }
 
                 float lastValidMaxTonnage = -1f;
-                for (int i = vanillaSlots - 1; i >= 0; i--)
+                for (int i = __instance.slotMaxTonnages.Length - 1; i >= 0; i--)
                 {
-                    if (__instance.slotMaxTonnages[i] >= 0f)
+                    if (i < __instance.maxUnits && __instance.slotMaxTonnages[i] >= 0f)
                     {
                         lastValidMaxTonnage = __instance.slotMaxTonnages[i];
                         break;
                     }
                 }
 
-                for (int i = vanillaSlots; i < __instance.slotMinTonnages.Length; i++)
+                for (int i = 0; i < __instance.slotMinTonnages.Length; i++)
                 {
                     __instance.slotMinTonnages[i] = i >= __instance.maxUnits ? 0f : lastValidMinTonnage;
                     __instance.slotMaxTonnages[i] = i >= __instance.maxUnits ? 0f : lastValidMaxTonnage;
