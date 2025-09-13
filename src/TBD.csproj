@@ -16,11 +16,11 @@
     <PublicizerRuntimeStrategies>Unsafe</PublicizerRuntimeStrategies>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <OutputPath>..\..\..\..\..\..\Program Files %28x86%29\Steam\Steamapps\common\BattleTech\Mods\fps_TheBigDealBEXCE\</OutputPath>
+    <OutputPath>$(BattleTechGameDir)\Mods\fps_TheBigDealBEXCE\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
-    <OutputPath>..\..\..\..\..\..\Program Files %28x86%29\Steam\Steamapps\common\BattleTech\Mods\fps_TheBigDealBEXCE\</OutputPath>
+    <OutputPath>$(BattleTechGameDir)\Mods\fps_TheBigDealBEXCE\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="HarmonyX" Version="2.13.0">
@@ -33,47 +33,35 @@
     <Publicize Include="Extended_CE:Extended_CE.Core.Settings" />
     <Publicize Include="FullXotlTables:FullXotlTables.Core.Settings" />
   </ItemGroup>
-  <ItemGroup>
-    <Reference Include="Assembly-CSharp">
+  <ItemDefinitionGroup>
+    <Reference>
       <Private>False</Private>
     </Reference>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <Reference Include="Assembly-CSharp" />
     <Reference Include="BiggerDrops">
       <HintPath>$(BattleTechGameDir)\Mods\BiggerDrops\BiggerDrops.dll</HintPath>
-      <Private>False</Private>
     </Reference>
     <Reference Include="Extended_CE">
       <HintPath>$(BattleTechGameDir)\Mods\BT_Extended_CE\Extended_CE.dll</HintPath>
-      <Private>False</Private>
     </Reference>
     <Reference Include="FullXotlTables">
       <HintPath>$(BattleTechGameDir)\Mods\FullXotlTables\FullXotlTables.dll</HintPath>
-      <Private>False</Private>
     </Reference>
     <Reference Include="IRTweaks">
       <HintPath>$(BattleTechGameDir)\Mods\IRTweaks\IRTweaks.dll</HintPath>
-      <Private>False</Private>
     </Reference>
     <Reference Include="MissionControl">
       <HintPath>$(BattleTechGameDir)\Mods\MissionControl\MissionControl.dll</HintPath>
-      <Private>False</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <Private>False</Private>
-    </Reference>
+    <Reference Include="Newtonsoft.Json" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="Unity.TextMeshPro">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.CoreModule">
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="UnityEngine.UI">
-      <Private>False</Private>
-    </Reference>
+    <Reference Include="Unity.TextMeshPro" />
+    <Reference Include="UnityEngine" />
+    <Reference Include="UnityEngine.CoreModule" />
+    <Reference Include="UnityEngine.UI" />
   </ItemGroup>
 </Project>
