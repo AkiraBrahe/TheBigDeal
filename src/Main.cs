@@ -34,12 +34,10 @@ namespace TBD
             {
                 Settings = JsonConvert.DeserializeObject<ModSettings>(settingsJSON) ?? new ModSettings();
                 harmony = new Harmony("com.github.Hounfor.TBD");
-
                 ApplySettings();
                 CACDetected = TrySetupCACIntegration();
-
                 harmony.PatchAll(Assembly.GetExecutingAssembly());
-                Log.Log("DLL successfully initialized!");
+                Log.Log("Mod initialized!");
             }
             catch (Exception ex)
             {

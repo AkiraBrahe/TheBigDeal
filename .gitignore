@@ -32,7 +32,6 @@ bld/
 [Oo]ut/
 [Ll]og/
 [Ll]ogs/
-*.dll
 
 # Visual Studio 2022 / Visual Studio Code cache/options directory
 .vs/
@@ -80,6 +79,7 @@ StyleCopReport.xml
 *.obj
 *.iobj
 *.pch
+*.dll
 *.pdb
 *.ipdb
 *.pgc
