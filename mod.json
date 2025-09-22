@@ -12,7 +12,10 @@
   "DLL": "TBD.dll",
 
   "Settings": {
-    "AdditionalPlayerMechs": false,
+    "EasyMode": {
+      "AdditionalPlayerMechs": false,
+      "SaveBetweenConsecutiveDrops": false
+    },
     "ExternalHeatPerActivationCap": 1500,
     "ScaleObjectiveBuildingStructure": false
   },

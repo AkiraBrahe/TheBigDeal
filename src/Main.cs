@@ -17,13 +17,6 @@ namespace TBD
         internal static HashSet<string> TBDContractIds { get; private set; } = [];
         internal static bool CACDetected { get; private set; } = false;
 
-        public class ModSettings
-        {
-            public bool AdditionalPlayerMechs { get; set; } = false;
-            public int ExternalHeatPerActivationCap { get; set; } = 45;
-            public bool ScaleObjectiveBuildingStructure { get; set; } = false;
-        }
-
         public static void Init(string directory, string settingsJSON)
         {
             modDir = directory;
@@ -47,7 +40,7 @@ namespace TBD
 
         internal static void ApplySettings()
         {
-            if (Settings.AdditionalPlayerMechs)
+            if (Settings.EasyMode.AdditionalPlayerMechs || !Settings.EasyMode.SaveBetweenConsecutiveDrops)
                 LoadTBDContractIds();
 
             if (FullXotlTables.Core.Settings?.UnitTableReferences != null)
@@ -121,16 +114,9 @@ namespace TBD
         {
             try
             {
-                Assembly cacAssembly = AppDomain.CurrentDomain.GetAssemblies()
-                    .FirstOrDefault(asm => asm.GetName().Name.Equals("CustomAmmoCategories"));
-                if (cacAssembly == null) return false;
-
-                Type PreForceTakeContractSaveType = cacAssembly.GetType("CustAmmoCategories.PreForceTakeContractSave");
-                if (PreForceTakeContractSaveType == null) return false;
-
-                FieldInfo PreForceTakeContractSaveField = PreForceTakeContractSaveType.GetField("SkipSave", BindingFlags.Public | BindingFlags.Static);
-                if (PreForceTakeContractSaveField == null) return false;
-                PreForceTakeContractSaveField.SetValue(null, true);
+                Assembly cacAssembly = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(asm => asm.GetName().Name.Equals("CustomAmmoCategories"));
+                if (cacAssembly == null)
+                    return false;
 
                 Log.LogDebug("CustomAmmoCategories reflection setup successful.");
                 return true;

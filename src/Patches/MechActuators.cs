@@ -24,7 +24,7 @@ namespace TBD.Patches
                 string mechSettingsPath = Path.Combine(Main.modDir, "MechSettings.json");
                 if (!File.Exists(mechSettingsPath))
                 {
-                    Main.Log.LogDebug("MechSettings.json not found, skipping merge.");
+                    Main.Log.LogWarning("MechSettings.json not found, skipping merge.");
                     _patched = true;
                     return;
                 }

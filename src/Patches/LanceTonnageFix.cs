@@ -1,5 +1,4 @@
 ﻿using BattleTech.UI;
-using System;
 
 namespace TBD.Patches
 {
