@@ -6,17 +6,17 @@ using System.Linq;
 namespace TBD.Patches
 {
     /// <summary>
-    /// Loads custom actuator settings from TBD's MechSettings.json and merges them with the settings from BT_Extended_CE.
+    /// Loads custom actuator settings from TBD's MechSettings.json.
     /// </summary>
     [HarmonyPatch(typeof(BTComponents), "Actuators", MethodType.Getter)]
     public static class MechActuators
     {
-        private static bool _patched = false;
+        private static bool patched = false;
 
         [HarmonyPostfix]
         public static void Postfix(ref ActuatorInfo __result)
         {
-            if (_patched || __result == null)
+            if (patched || __result == null)
                 return;
 
             try
@@ -25,7 +25,7 @@ namespace TBD.Patches
                 if (!File.Exists(mechSettingsPath))
                 {
                     Main.Log.LogWarning("MechSettings.json not found, skipping merge.");
-                    _patched = true;
+                    patched = true;
                     return;
                 }
 
@@ -42,7 +42,7 @@ namespace TBD.Patches
                 Main.Log.LogException("Failed to merge MechSettings.", ex);
             }
 
-            _patched = true;
+            patched = true;
         }
     }
 }

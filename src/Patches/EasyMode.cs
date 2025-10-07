@@ -1,4 +1,5 @@
 ﻿using BattleTech.Framework;
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 using System.Reflection.Emit;
@@ -39,18 +40,13 @@ namespace TBD.Patches
             [HarmonyPostfix]
             public static void Postfix(MissionControl.MissionControl __instance, ref bool __result)
             {
-                var contract = __instance.CurrentContract;
-                if (contract == null) return;
-
-                var contractOverride = contract.Override;
-                if (contractOverride == null) return;
-
-                string contractId = contractOverride.ID;
-                if (contractId == null) return;
-
-                if (Main.TBDContractIds.Contains(contractId))
+                string contractId = __instance?.CurrentContract?.Override?.ID;
+                if (contractId != null)
                 {
-                    __result = true;
+                    if (Main.TBDContractIds.Contains(contractId))
+                    {
+                        __result = true;
+                    }
                 }
             }
         }
@@ -59,8 +55,9 @@ namespace TBD.Patches
         /// Allows saving between consecutive drops in TBD contracts.
         /// </summary>
         [HarmonyPatch]
-        public static class PreForceTakeContractSave_ApplyEventAction_prefix_Transpiler
+        public static class PreForceTakeContractSave_Patch
         {
+            [HarmonyTargetMethod]
             public static MethodBase TargetMethod()
             {
                 var type = AccessTools.TypeByName("CustAmmoCategories.PreForceTakeContractSave");
@@ -70,38 +67,31 @@ namespace TBD.Patches
             [HarmonyPrepare]
             public static bool Prepare() => Main.CACDetected && !Main.Settings.EasyMode.SaveBetweenConsecutiveDrops;
 
-            public static bool IsTBDContract(ContractOverride contractOverride)
-            {
-                if (contractOverride == null) return false;
-                return Main.TBDContractIds.Contains(contractOverride.ID);
-            }
-
             [HarmonyTranspiler]
             public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
             {
-                var matcher = new CodeMatcher(instructions);
-                matcher.MatchForward(false,
-                    new CodeMatch(i => i.IsLdloc()),
-                    new CodeMatch(OpCodes.Ldfld, AccessTools.Field(typeof(ContractOverride), "disableCancelButton")),
-                    new CodeMatch(OpCodes.Ldc_I4_0),
-                    new CodeMatch(OpCodes.Ceq)
-                );
-
-                if (matcher.IsInvalid)
+                try
                 {
-                    Main.Log.LogError("Failed to transpile PreForceTakeContractSave.");
+                    var matcher = new CodeMatcher(instructions)
+                        .MatchForward(false,
+                            new CodeMatch(OpCodes.Ldfld, AccessTools.Field(typeof(ContractOverride), "disableCancelButton")),
+                            new CodeMatch(i => i.opcode.FlowControl == FlowControl.Cond_Branch));
+                    if (matcher.IsInvalid) return instructions;
+                    matcher.SetInstruction(new CodeInstruction(OpCodes.Call, AccessTools.Method(typeof(PreForceTakeContractSave_Patch), "IsConsecutiveAndNotTBDContract")));
+
+                    Main.Log.LogDebug("Patched PreForceTakeContractSave to skip TBD contracts.");
+                    return matcher.InstructionEnumeration();
+                }
+                catch (Exception ex)
+                {
+                    Main.Log.LogException("Failed to transpile PreForceTakeContractSave. Patch will not be applied.", ex);
                     return instructions;
                 }
+            }
 
-                var instruction = matcher.Instruction;
-                matcher.Advance(3).Insert(
-                    new CodeInstruction(instruction.opcode, instruction.operand),
-                    CodeInstruction.Call(typeof(PreForceTakeContractSave_ApplyEventAction_prefix_Transpiler), nameof(IsTBDContract)),
-                    new CodeInstruction(OpCodes.Or)
-                );
-
-                Main.Log.LogDebug("Transpiler for PreForceTakeContractSave applied successfully.");
-                return matcher.InstructionEnumeration();
+            public static bool IsConsecutiveAndNotTBDContract(ContractOverride contractOverride)
+            {
+                return contractOverride != null && (contractOverride.disableCancelButton && !Main.TBDContractIds.Contains(contractOverride.ID));
             }
         }
     }
