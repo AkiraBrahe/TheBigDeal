@@ -84,7 +84,7 @@ namespace TBD.Patches
                 }
                 catch (Exception ex)
                 {
-                    Main.Log.LogException("Failed to transpile PreForceTakeContractSave. Patch will not be applied.", ex);
+                    Main.Log.LogException(ex);
                     return instructions;
                 }
             }

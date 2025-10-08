@@ -123,7 +123,7 @@ namespace TBD
             }
             catch (Exception)
             {
-                Log.LogDebug("CustomAmmoCategories reflection setup failed. CAC-C was not detected or isn't present.");
+                Log.LogDebug("CustomAmmoCategories reflection setup failed. CAC-C wasn't detected or isn't present.");
                 return false;
             }
         }

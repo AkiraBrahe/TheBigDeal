@@ -35,11 +35,11 @@ namespace TBD.Patches
                 __result.MechsWithoutLeftHand.AddRange(actuatorInfo.MechsWithoutLeftHand.Except(__result.MechsWithoutLeftHand));
                 __result.MechsWithoutRightHand.AddRange(actuatorInfo.MechsWithoutRightHand.Except(__result.MechsWithoutRightHand));
 
-                Main.Log.LogDebug("Successfully merged MechSettings.");
+                Main.Log.LogDebug("Loaded TBD's mech actuator settings.");
             }
             catch (System.Exception ex)
             {
-                Main.Log.LogException("Failed to merge MechSettings.", ex);
+                Main.Log.LogException(ex);
             }
 
             patched = true;
