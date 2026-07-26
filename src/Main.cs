@@ -30,6 +30,15 @@ namespace TBD
                 ApplySettings();
                 CACDetected = TrySetupCACIntegration();
                 harmony.PatchAll(Assembly.GetExecutingAssembly());
+
+                Log.Log("Mod settings loaded successfully.");
+                Log.Log("• Additional Player Mechs: " + (Settings.EasyMode.AdditionalPlayerMechs
+                    ? "Enabled\n Up to 12 player mechs will be allowed in TBD contracts."
+                    : "Disabled\n Only 4 player mechs will be allowed in TBD contracts (default)."));
+                Log.Log("• Save Between Consecutive Drops: " + (Settings.EasyMode.SaveBetweenConsecutiveDrops
+                    ? "Enabled\n The game will be saved between consecutive drops."
+                    : "Disabled\n The game will not be saved between consecutive drops (default)."));
+
                 Log.Log("Mod initialized!");
             }
             catch (Exception ex)
