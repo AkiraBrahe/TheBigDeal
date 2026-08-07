@@ -1,4 +1,4 @@
-﻿using Extended_CE;
+using Extended_CE;
 using Newtonsoft.Json;
 using System.IO;
 using System.Linq;

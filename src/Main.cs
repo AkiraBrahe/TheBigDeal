@@ -3,7 +3,6 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 
 namespace TBD
@@ -20,16 +19,13 @@ namespace TBD
         public static void Init(string directory, string settingsJSON)
         {
             modDir = directory;
-            Log = Logger.GetLogger("TBD");
-            Logger.SetLoggerLevel("TBD", LogLevel.Debug);
+            Log = HBS.Logging.Logger.GetLogger("TBD", LogLevel.Debug);
 
             try
             {
                 Settings = JsonConvert.DeserializeObject<ModSettings>(settingsJSON) ?? new ModSettings();
                 harmony = new Harmony("com.github.Hounfor.TBD");
                 ApplySettings();
-                CACDetected = TrySetupCACIntegration();
-                harmony.PatchAll(Assembly.GetExecutingAssembly());
 
                 Log.Log("Mod settings loaded successfully.");
                 Log.Log("• Additional Player Mechs: " + (Settings.EasyMode.AdditionalPlayerMechs
@@ -38,6 +34,9 @@ namespace TBD
                 Log.Log("• Save Between Consecutive Drops: " + (Settings.EasyMode.SaveBetweenConsecutiveDrops
                     ? "Enabled\n The game will be saved between consecutive drops."
                     : "Disabled\n The game will not be saved between consecutive drops (default)."));
+
+                CACDetected = SetupCACIntegration();
+                harmony.PatchAll(Assembly.GetExecutingAssembly());
 
                 Log.Log("Mod initialized!");
             }
@@ -123,7 +122,7 @@ namespace TBD
             }
         }
 
-        internal static bool TrySetupCACIntegration()
+        internal static bool SetupCACIntegration()
         {
             try
             {

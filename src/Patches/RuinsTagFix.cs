@@ -1,4 +1,4 @@
-﻿using BattleTech;
+using BattleTech;
 using System;
 using System.Linq;
 
@@ -7,7 +7,7 @@ namespace TBD.Patches
     internal class RuinsTagFix
     {
         /// <summary>
-        /// Replaces the ruins tag to allow Opportunity missions in more star systems.
+        /// Replaces the ruins tag to allow opportunity missions in more star systems.
         /// </summary>
         [HarmonyPatch(typeof(StarSystem), nameof(StarSystem.Rehydrate))]
         public static class StarSystem_Rehydrate

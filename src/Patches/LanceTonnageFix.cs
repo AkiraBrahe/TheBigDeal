@@ -1,4 +1,4 @@
-﻿using BattleTech.UI;
+using BattleTech.UI;
 
 namespace TBD.Patches
 {
@@ -11,7 +11,7 @@ namespace TBD.Patches
         public static class LanceConfiguratorPanel_SetData
         {
             [HarmonyPrepare]
-            public static bool Prepare() => Main.CACDetected == false;
+            public static bool Prepare() => !Main.CACDetected;
 
             [HarmonyPostfix]
             public static void Postfix(LanceConfiguratorPanel __instance)
@@ -19,13 +19,13 @@ namespace TBD.Patches
                 if (__instance == null || __instance.maxUnits <= __instance.slotMinTonnages.Length)
                     return;
 
-                var minLimit = GetLastValidTonnage(__instance.slotMinTonnages, __instance.maxUnits);
-                var maxLimit = GetLastValidTonnage(__instance.slotMaxTonnages, __instance.maxUnits);
+                float minLimit = GetLastValidTonnage(__instance.slotMinTonnages, __instance.maxUnits);
+                float maxLimit = GetLastValidTonnage(__instance.slotMaxTonnages, __instance.maxUnits);
 
                 if (minLimit >= 0 || maxLimit >= 0)
                 {
-                    var newMinArray = new float[__instance.maxUnits];
-                    var newMaxArray = new float[__instance.maxUnits];
+                    float[] newMinArray = new float[__instance.maxUnits];
+                    float[] newMaxArray = new float[__instance.maxUnits];
 
                     for (int i = 0; i < __instance.maxUnits; i++)
                     {
@@ -73,7 +73,6 @@ namespace TBD.Patches
                         slot.dropTonnageText.SetText("Max: {0} Tons", max);
                 }
             }
-
         }
     }
 }

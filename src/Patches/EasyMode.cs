@@ -1,4 +1,4 @@
-﻿using BattleTech.Framework;
+using BattleTech.Framework;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -26,7 +26,6 @@ namespace TBD.Patches
                     __instance.maxNumberOfPlayerUnits == 4)
                 {
                     __instance.maxNumberOfPlayerUnits = Main.CACDetected ? 12 : 8;
-                    Main.Log.LogDebug($"Patching TBD contract '{__instance.ID}' to allow for {__instance.maxNumberOfPlayerUnits} player mechs.");
                 }
             }
         }
