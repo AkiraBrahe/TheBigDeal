@@ -124,20 +124,16 @@ namespace TBD
 
         internal static bool SetupCACIntegration()
         {
-            try
-            {
-                var cacAssembly = AppDomain.CurrentDomain.GetAssemblies().FirstOrDefault(asm => asm.GetName().Name.Equals("CustomAmmoCategories"));
-                if (cacAssembly == null)
-                    return false;
+            var cacType = Type.GetType("CustAmmoCategories.PreForceTakeContractSave, CustomAmmoCategories", throwOnError: false);
 
+            if (cacType != null)
+            {
                 Log.LogDebug("CustomAmmoCategories reflection setup successful.");
                 return true;
             }
-            catch (Exception)
-            {
-                Log.LogDebug("CustomAmmoCategories reflection setup failed. CAC-C wasn't detected or isn't present.");
-                return false;
-            }
+
+            Log.LogDebug("CustomAmmoCategories reflection setup failed. CAC wasn't detected or isn't present.");
+            return false;
         }
     }
 }

@@ -51,20 +51,20 @@ namespace TBD.Patches
         }
 
         /// <summary>
-        /// Allows saving between consecutive drops in TBD contracts.
+        /// Disables saving between consecutive drops in TBD contracts.
         /// </summary>
         [HarmonyPatch]
         public static class PreForceTakeContractSave_Patch
         {
+            [HarmonyPrepare]
+            public static bool Prepare() => Main.CACDetected && !Main.Settings.EasyMode.SaveBetweenConsecutiveDrops;
+
             [HarmonyTargetMethod]
             public static MethodBase TargetMethod()
             {
-                var type = Type.GetType("CustAmmoCategories.PreForceTakeContractSave, CustAmmoCategories");
-                return type != null ? AccessTools.Method(type, "ApplyEventAction_prefix") : null;
+                var type = Type.GetType("CustAmmoCategories.PreForceTakeContractSave, CustomAmmoCategories");
+                return AccessTools.Method(type, "ApplyEventAction_prefix");
             }
-
-            [HarmonyPrepare]
-            public static bool Prepare() => Main.CACDetected && !Main.Settings.EasyMode.SaveBetweenConsecutiveDrops;
 
             [HarmonyTranspiler]
             public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions)
